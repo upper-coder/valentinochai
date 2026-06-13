@@ -76,12 +76,13 @@ html {
     border-left-color: var(--secondary-color);
 }
 
+/* Find the .mobile-menu-toggle section and replace it with this: */
 .mobile-menu-toggle {
     display: none;
     position: fixed;
     top: 1rem;
     left: 1rem;
-    z-index: 1001;
+    z-index: 1002; /* Increase from 1001 to be above nav */
     background-color: var(--primary-color);
     border: none;
     padding: 0.5rem;
@@ -89,6 +90,7 @@ html {
     flex-direction: column;
     gap: 4px;
     border-radius: 4px;
+    transition: all 0.3s ease;
 }
 
 .mobile-menu-toggle span {
@@ -96,7 +98,32 @@ html {
     width: 25px;
     height: 3px;
     background-color: #fff;
-    transition: var(--transition);
+    transition: all 0.3s ease;
+    border-radius: 2px;
+}
+
+/* Transform to X and move to top-right when menu is open */
+/* Transform to X and move to visible top-right when menu is open */
+.mobile-menu-toggle.active {
+    left: auto;
+    right: 1rem; /* 1rem from the RIGHT edge of the screen */
+    top: 1rem;
+    background-color: rgba(255, 255, 255, 0.15);
+    z-index: 1002;
+    /* Remove any transform that might be pushing it off screen */
+    transform: none !important;
+}
+
+.mobile-menu-toggle.active span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+
+.mobile-menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.mobile-menu-toggle.active span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
 }
 
 /* ===== MAIN CONTENT ===== */
@@ -170,7 +197,9 @@ html {
 }
 
 .profile-image {
-    margin-bottom: 1.5rem;
+      margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: center; /* Center the image */
 }
 
 .profile-image img {
@@ -809,17 +838,56 @@ html {
 }
 
 /* ===== RESPONSIVE DESIGN ===== */
+/* ===== MOBILE MENU - FULL SCREEN ===== */
 @media (max-width: 768px) {
     .mobile-menu-toggle {
         display: flex;
     }
 
     .main-nav {
+        width: 100%; /* Full screen width */
         transform: translateX(-100%);
     }
 
     .main-nav.open {
         transform: translateX(0);
+    }
+
+    /* Center and space out navigation items */
+    .main-nav ul {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        padding: 0;
+        gap: 0.5rem;
+    }
+
+    .main-nav li {
+        width: 100%;
+        max-width: 400px;
+        text-align: center;
+    }
+
+    .main-nav a {
+        font-size: 1.3rem;
+        padding: 1.25rem 2rem;
+        border-left: none; /* Remove left border */
+        border-bottom: 2px solid transparent; /* Add bottom border instead */
+        letter-spacing: 0.5px;
+    }
+
+    .main-nav a:hover,
+    .main-nav a.active {
+        background-color: rgba(255, 255, 255, 0.1);
+        border-left: none;
+        border-bottom-color: var(--secondary-color);
+    }
+
+    /* Adjust hamburger position for full-screen */
+    .mobile-menu-toggle.active {
+        transform: translateX(calc(100vw - 4.5rem)); /* Move to right edge of screen */
     }
 
     .content-wrapper {
@@ -828,7 +896,8 @@ html {
 
     .page-section {
         padding: 2rem 1.5rem;
-        padding-top: 4rem;
+        padding-top: 5rem;
+        padding-left: 4.5rem; /* Keep left padding for when menu is closed */
     }
 
     .home-container {
@@ -914,7 +983,14 @@ html {
 
     .page-section {
         padding: 1.5rem 1rem;
-        padding-top: 4rem;
+        padding-top: 5rem;
+        padding-left: 4rem;
+    }
+
+    /* Slightly smaller menu text on very small screens */
+    .main-nav a {
+        font-size: 1.2rem;
+        padding: 1rem 1.5rem;
     }
 }
 

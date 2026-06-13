@@ -6,6 +6,30 @@ document.addEventListener('DOMContentLoaded', function() {
     const mobileMenuToggle = document.getElementById('mobileMenuToggle');
     const mainNav = document.getElementById('mainNav');
 
+    // Mobile menu toggle with scroll prevention
+    mobileMenuToggle.addEventListener('click', function() {
+        mainNav.classList.toggle('open');
+        mobileMenuToggle.classList.toggle('active');
+        
+        // Prevent body scrolling when menu is open
+        if (mainNav.classList.contains('open')) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', function(e) {
+        if (window.innerWidth <= 768) {
+            if (!mainNav.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
+                mainNav.classList.remove('open');
+                mobileMenuToggle.classList.remove('active');
+                document.body.style.overflow = ''; // Re-enable scrolling
+            }
+        }
+    });
+
     // Page navigation
     navLinks.forEach(link => {
         link.addEventListener('click', function(e) {
@@ -25,28 +49,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 targetSection.classList.add('active');
             }
             
-            // Close mobile menu if open
+            // Close mobile menu if open and re-enable scrolling
             if (window.innerWidth <= 768) {
                 mainNav.classList.remove('open');
+                mobileMenuToggle.classList.remove('active');
+                document.body.style.overflow = '';
             }
             
             // Scroll to top of page
             window.scrollTo(0, 0);
         });
-    });
-
-    // Mobile menu toggle
-    mobileMenuToggle.addEventListener('click', function() {
-        mainNav.classList.toggle('open');
-    });
-
-    // Close mobile menu when clicking outside
-    document.addEventListener('click', function(e) {
-        if (window.innerWidth <= 768) {
-            if (!mainNav.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
-                mainNav.classList.remove('open');
-            }
-        }
     });
 
     // Collapsible sections for research streams
@@ -116,16 +128,16 @@ document.addEventListener('DOMContentLoaded', function() {
     // Highlight active timeline link on scroll (for teaching page)
     let ticking = false;
     
-window.addEventListener('scroll', function() {
-    if (!ticking) {
-        window.requestAnimationFrame(function() {
-            updateActiveTimelineLink();
-            updateActiveResearchLink();  // ADD THIS LINE
-            ticking = false;
-        });
-        ticking = true;
-    }
-});
+    window.addEventListener('scroll', function() {
+        if (!ticking) {
+            window.requestAnimationFrame(function() {
+                updateActiveTimelineLink();
+                updateActiveResearchLink();
+                ticking = false;
+            });
+            ticking = true;
+        }
+    });
     
     function updateActiveTimelineLink() {
         // Only run if on teaching page
@@ -154,44 +166,44 @@ window.addEventListener('scroll', function() {
         }
     }
 
-function updateActiveResearchLink() {
-    // Only run if on research page
-    const researchSection = document.getElementById('research');
-    if (!researchSection || !researchSection.classList.contains('active')) {
-        return;
-    }
-    
-    const researchTimelineLinks = document.querySelectorAll('#research .timeline-link');
-    const scrollPosition = window.scrollY + 200; // Offset from top
-    
-    // Get all sections with their absolute positions
-    const sections = [
-        { id: 'research-streams', element: document.getElementById('research-streams') },
-        { id: 'publications', element: document.getElementById('publications') },
-        { id: 'manuscripts', element: document.getElementById('manuscripts') }
-    ].filter(s => s.element !== null);
-    
-    // Find which section we're currently in
-    let currentSection = sections[0].id; // Default to first section
-    
-    sections.forEach(section => {
-        // Get absolute position from top of page
-        const rect = section.element.getBoundingClientRect();
-        const absoluteTop = rect.top + window.scrollY;
+    function updateActiveResearchLink() {
+        // Only run if on research page
+        const researchSection = document.getElementById('research');
+        if (!researchSection || !researchSection.classList.contains('active')) {
+            return;
+        }
         
-        if (scrollPosition >= absoluteTop) {
-            currentSection = section.id;
-        }
-    });
-    
-    // Update active states
-    researchTimelineLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === '#' + currentSection) {
-            link.classList.add('active');
-        }
-    });
-}
+        const researchTimelineLinks = document.querySelectorAll('#research .timeline-link');
+        const scrollPosition = window.scrollY + 200; // Offset from top
+        
+        // Get all sections with their absolute positions
+        const sections = [
+            { id: 'research-streams', element: document.getElementById('research-streams') },
+            { id: 'publications', element: document.getElementById('publications') },
+            { id: 'manuscripts', element: document.getElementById('manuscripts') }
+        ].filter(s => s.element !== null);
+        
+        // Find which section we're currently in
+        let currentSection = sections[0].id; // Default to first section
+        
+        sections.forEach(section => {
+            // Get absolute position from top of page
+            const rect = section.element.getBoundingClientRect();
+            const absoluteTop = rect.top + window.scrollY;
+            
+            if (scrollPosition >= absoluteTop) {
+                currentSection = section.id;
+            }
+        });
+        
+        // Update active states
+        researchTimelineLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + currentSection) {
+                link.classList.add('active');
+            }
+        });
+    }
 
     // Smooth scrolling for anchor links within pages
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -222,6 +234,4 @@ function updateActiveResearchLink() {
             }
         });
     });
-
-    
 });
