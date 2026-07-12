@@ -730,35 +730,9 @@ html {
     letter-spacing: 0.5px;
 }
 
-.stream-badge.cooperation {
-    background-color: var(--cooperation-color);
-    color: white;
-}
-
-.stream-badge.competition {
-    background-color: var(--competition-color);
-    color: white;
-}
-
-.collapsible-section.cooperation-theme {
-    border-left: 3px solid var(--cooperation-color);
-}
-
-.collapsible-section.competition-theme {
-    border-left: 3px solid var(--competition-color);
-}
-
-.collapsible-section.cooperation-theme .collapsible:hover {
-    background-color: var(--light-bg);
-}
-
-.collapsible-section.competition-theme .collapsible:hover {
-    background-color: var(--light-bg);
-}
-
 .pub-stream-tag {
     display: inline-block;
-    padding: 0.3rem 0.75rem;
+    padding: 0.25rem 0.75rem;
     border-radius: 2px;
     font-size: 0.75rem;
     font-weight: 600;
@@ -767,22 +741,94 @@ html {
     letter-spacing: 0.5px;
 }
 
-.pub-stream-tag.cooperation {
-    background-color: var(--cooperation-color);
+/* ===== STREAM THEME COLORS (Stanford Palette) ===== */
+
+/* Stream 1 - Stone (Navigating Inconsistent) #544948 */
+.stream-badge.stream-1 {
+    background-color: #544948;
+    color: white;
+    
+}
+
+.pub-stream-tag.stream-1 {
+    background-color: #544948;
     color: white;
 }
 
-.pub-stream-tag.competition {
-    background-color: var(--competition-color);
+.collapsible-section.stream-1-theme {
+    border-left: 3px solid #544948;
+}
+
+.publication.stream-1-theme,
+.manuscript.stream-1-theme {
+    border-left-color: #544948;
+}
+
+/* Stream 2 - Sky (Novel Forms & Effects) #4298B5 */
+.stream-badge.stream-2 {
+    background-color: #4298B5;
     color: white;
 }
 
-.publication.cooperation-theme {
-    border-left-color: var(--cooperation-color);
+.pub-stream-tag.stream-2 {
+    background-color: #4298B5;
+    color: white;
 }
 
-.publication.competition-theme {
-    border-left-color: var(--competition-color);
+.collapsible-section.stream-2-theme {
+    border-left: 3px solid #4298B5;
+}
+
+.publication.stream-2-theme,
+.manuscript.stream-2-theme {
+    border-left-color: #4298B5;
+}
+
+/* Stream 3 - Bay (Antecedents & Barriers) #6FA287 */
+.stream-badge.stream-3 {
+    background-color: #6FA287;
+    color: white;
+}
+
+.pub-stream-tag.stream-3 {
+    background-color: #6FA287;
+    color: white;
+}
+
+.collapsible-section.stream-3-theme {
+    border-left: 3px solid #6FA287;
+}
+
+.publication.stream-3-theme,
+.manuscript.stream-3-theme {
+    border-left-color: #6FA287;
+}
+
+/* Other/General Work - Gray #6b7280 */
+.stream-badge.other {
+    background-color: #6b7280;
+    color: white;
+}
+
+.pub-stream-tag.other {
+    background-color: #6b7280;
+    color: white;
+}
+
+.publication.other-theme,
+.manuscript.other-theme {
+    border-left-color: #6b7280;
+}
+
+/* Multiple stream tags - add spacing */
+.pub-stream-tag + .pub-stream-tag {
+    margin-left: 0.5rem;
+}
+
+/* Publications/Manuscripts with multiple streams - use first stream color for border */
+.publication.stream-1-theme.stream-2-theme,
+.manuscript.stream-1-theme.stream-2-theme {
+    border-left-color: #544948; /* Use Stream 1 color when both */
 }
 
 /* ===== GENERAL/RELATED WORK BADGE ===== */
@@ -829,13 +875,7 @@ html {
     color: var(--text-color);
 }
 
-.manuscript.cooperation-theme {
-    border-left-color: var(--cooperation-color);
-}
 
-.manuscript.competition-theme {
-    border-left-color: var(--competition-color);
-}
 
 /* ===== RESPONSIVE DESIGN ===== */
 /* ===== MOBILE MENU - FULL SCREEN ===== */
@@ -991,6 +1031,13 @@ html {
     .main-nav a {
         font-size: 1.2rem;
         padding: 1rem 1.5rem;
+    }
+        .main-question {
+        font-size: 1.1rem;
+    }
+    
+    .obstacle-card {
+        padding: 1.25rem 0.875rem;
     }
 }
 
@@ -1273,6 +1320,113 @@ html {
     border-left-color: var(--competition-color);
 }
 
+/* ===== NEW RESEARCH VISUAL (OPTION 4) ===== */
+
+.research-visual {
+    text-align: center;
+    padding: 2.5rem 0 3rem 0;
+    max-width: 900px;
+    margin: 0 auto 2rem auto;
+}
+
+.main-question {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 2.5rem;
+    line-height: 1.6;
+    color: var(--text-color);
+}
+
+.main-question .coop {
+    color: #2563eb; /* Blue for cooperation */
+    font-weight: 700;
+}
+
+.main-question .comp {
+    color: #d97706; /* Red for competition */
+    font-weight: 700;
+}
+
+.three-obstacles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.obstacle-card {
+    background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);
+    padding: 2rem 1.5rem;
+    border-radius: 8px;
+    border-left: 4px solid var(--primary-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.obstacle-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+.obstacle-card .number {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    line-height: 40px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+/* Stream-specific colors */
+.obstacle-card:nth-child(1) .number {
+    background: #544948     ; /* Stream 1: Navigating */
+}
+
+.obstacle-card:nth-child(1) {
+    border-left-color: #544948  ;
+}
+
+.obstacle-card:nth-child(2) .number {
+    background: #4298B5 ; /* Stream 2: Forms & Effects */
+}
+
+.obstacle-card:nth-child(2) {
+    border-left-color: #4298B5;
+}
+
+.obstacle-card:nth-child(3) .number {
+    background: #6FA287; /* Stream 3: Implementation */
+}
+
+.obstacle-card:nth-child(3) {
+    border-left-color: #6FA287;
+}
+
+.obstacle-card h3 {
+    font-size: 1.1rem;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.obstacle-card p {
+    font-size: 0.95rem;
+    color: #666;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.tagline {
+    font-size: 1.05rem;
+    color: #555;
+    font-style: italic;
+    margin-top: 2rem;
+}
+
 .stream-number {
     display: inline-flex;
     align-items: center;
@@ -1361,5 +1515,43 @@ html {
     
     .research-streams-summary {
         padding: 1.5rem;
+    }
+    /* Add these new rules for Option 4 visual */
+    .research-visual {
+        padding: 1.5rem 0 2rem 0;
+    }
+
+    .main-question {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+    }
+    
+    .three-obstacles {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .obstacle-card {
+        padding: 1.5rem 1rem;
+    }
+    
+    .obstacle-card .number {
+        width: 35px;
+        height: 35px;
+        line-height: 35px;
+        font-size: 1.1rem;
+    }
+    
+    .obstacle-card h3 {
+        font-size: 1rem;
+    }
+    
+    .obstacle-card p {
+        font-size: 0.9rem;
+    }
+    
+    .tagline {
+        font-size: 0.95rem;
+        margin-top: 1.5rem;
     }
 }
