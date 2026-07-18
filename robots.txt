@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.valentinochai.com/sitemap.xml
+Sitemap: https://valentinochai.com/sitemap.xml
